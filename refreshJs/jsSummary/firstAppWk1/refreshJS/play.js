@@ -1,0 +1,46 @@
+const person = 'Max';
+let age = 29;
+const hasHobbies = true;
+
+age = 30;
+
+
+function summarizeUser(userName, userAge, userHasHobby) {
+    return (
+        'Name is ' +
+        username +
+        ', age is ' +
+        userAge +
+        ' and the user has hobbies: ' +
+        userHasHobby
+    );
+}
+
+/* 
+or can write like this:
+const summarizeUser = (userName, userAge, userHasHobby) => {
+    this
+    return (
+        'Name is ' +
+        username +
+        ', age is ' +
+        userAge +
+        ' and the user has hobbies: ' +
+        userHasHobby
+    );
+}
+*/
+const add = (a, b) => {
+    return a + b;
+};
+//also be written as  const add = (a,b) => a + b;
+
+const addOne = a => a +1;
+const addRandom = () => 1 + 2;
+
+
+
+console.log(addRandom());
+console.log(addOne(1));
+console.log(add(1,2));
+console.log(summarizeUser(person, age, hasHobbies));
