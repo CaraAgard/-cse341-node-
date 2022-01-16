@@ -1,11 +1,72 @@
-//const http = require('./http');
-const http = require('http');
-//const fs = require('fs');
-const routes = require('./routes');
+const path = require('path');
 
+//const http = require('./http');
+//const http = require('http');
+
+const express = require('express');
+
+
+
+const bodyParser = require('body-parser');
+//const expressHbs = require('express-handlebars');
+//const fs = require('fs');
+//const routes = require('./routes');
+const app = express();
+
+//app.engine('hbs', expressHbs({layoutsDir: 'views/layouts', defaultLayout: 'main-layout', extname: 'hbs'}));
+// app.set('view engine', 'pug');
+// app.set('view engine', 'hbs');
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
+// const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+const res = require('express/lib/response');
+
+//app.use('/admin',adminRoutes);
+app.use('/admin',adminData.routes);
+app.use(shopRoutes);
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// app.use((req, res, next) => {
+//     console.log('In the middleware');
+//     next();
+// });
+// app.use('/add-product',(req, res, next) => {
+//    // console.log('In another middleware');
+//    //res.send('<h1>The "Add Product" Page</h1>');
+//    res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>')
+// });
+
+// app.use('/product', (req, res, next) => {
+//     console.log(req.body);
+//     res.redirect('/');
+
+// });
+
+// app.get('/product', (req, res, next) => {
+//     console.log(req.body);
+//     res.redirect('/');
+
+// });
+
+// app.post('/product', (req, res, next) => {
+//     console.log(req.body);
+//     res.redirect('/');
+
+// });
+
+app.use('/',(req, res, next) => {
+  //  console.log('In another middleware');
+   res.send('<h1>Hello</h1>');
+});
 //const server = http.createServer(routes);
-console.log(routes.someText);
-const server = http.createServer(routes.handler);
+//console.log(routes.someText);
+//const server = http.createServer(routes.handler);
+//const server = http.createServer(app);
 // function rqListener(req, res) {
 
 // }  
@@ -182,4 +243,18 @@ const server = http.createServer(routes.handler);
     
 // });
 
-server.listen(3000);
+//server.listen(3000);
+
+// app.use((req, res, next) => {
+//     res.status(404).send('<h1>Page not found</h1>');
+// });
+
+// app.use((req, res, next) => {
+//     res.status(404).sendFile(path.join(__dirname, 'view', '404.html'));
+// });
+
+app.use((req, res, next) => {
+    res.status(404, {pageTitle: 'Page not found'}).render('404');
+});
+
+app.listen(3000);
